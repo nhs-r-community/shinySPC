@@ -3,14 +3,34 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import shinydashboard
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic 
-    fluidPage(
-      h1("shinySPC")
+    ui <- dashboardPage(
+      dashboardHeader(title = "Shiny SPC"),
+      dashboardSidebar(
+        sidebarMenu(
+          menuItem("Data load", tabName = "data_load", icon = icon("file-upload")),
+          menuItem("Graph", tabName = "graph", icon = icon("chart-line"))
+        )
+      ),
+      dashboardBody(
+        tabItems(
+          # First tab content
+          tabItem(tabName = "data_load",
+                  mod_data_load_ui("data_load_ui_1")
+                  ),
+          
+          # Second tab content
+          tabItem(tabName = "graph",
+                  mod_draw_graph_ui("draw_graph_ui_1")
+          )
+        )
+      )
     )
   )
 }
