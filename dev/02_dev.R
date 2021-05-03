@@ -11,6 +11,8 @@
 #### CURRENT FILE: DEV SCRIPT #####
 ###################################
 
+stop()
+
 # Engineering
 
 ## Dependencies ----
@@ -18,6 +20,8 @@
 usethis::use_package( "shinydashboard" )
 usethis::use_package( "datamods" )
 usethis::use_package( "DT" )
+
+usethis::use_pipe()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
