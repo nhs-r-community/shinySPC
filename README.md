@@ -1,17 +1,18 @@
 # shinySPC
-A {golem} powered Shiny interface to SPC charts, incorporating the NHS-R SPC package and others.
 
-It doesn't really work properly yet but when it does:
+A {golem} powered Shiny interface to SPC charts, incorporating the NHS-R SPC package and others.
 
 Install with
 
-```R
+``` r
 devtools::install_github("nhs-r-community/shinySPC")
 ```
 
-Run with 
+Run with
 
-```R
+``` r
 library(shinySPC)
 run_app()
 ```
+
+[A live demo can be found here](https://involve.nottshc.nhs.uk:8443/content/879e1268-8e24-4d8e-98c5-1786a876d825)
