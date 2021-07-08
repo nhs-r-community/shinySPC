@@ -21,6 +21,7 @@ usethis::use_package( "shinydashboard" )
 usethis::use_package( "datamods" )
 usethis::use_package( "DT" )
 usethis::use_package( "dplyr" )
+usethis::use_package( "qicharts2" )
 
 usethis::use_pipe()
 
