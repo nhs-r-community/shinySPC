@@ -13,7 +13,8 @@ mod_data_load_ui <- function(id){
     fluidRow(
       column(
         width = 4,
-        datamods::import_file_ui(ns("myid"))
+        actionButton(ns("launch_modal"), "Upload new data"),
+        uiOutput(ns("date_picker"))
       ),
       column(
         width = 8,
@@ -31,10 +32,33 @@ mod_data_load_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    imported <- datamods::import_file_server("myid")
+    observeEvent(input$launch_modal, {
+      datamods::import_modal(
+        id = session$ns("myid"),
+        from = "file",
+        title = "Import data to be used in application"
+      )
+    })
+    
+    imported <- datamods::import_server("myid", return_class = "tbl_df")
+    
+    final_data <- reactive({
+      
+      return_data <- imported$data()
+      
+      # if(TRUE)
+    })
     
     output$show_data <- DT::renderDT({
       imported$data()
+    })
+    
+    output$date_picker <- renderUI({
+      
+      req(imported$data())
+      
+      selectInput("date_field", "Date column", 
+                  choices = names(imported$data()))
     })
     
     reactive(
