@@ -19,7 +19,9 @@ mod_data_load_ui <- function(id){
       ),
       column(
         width = 8,
-        tags$b("Imported data:"),
+        h2("Imported data:"),
+        h3("Note that the date is being correctly read if it displays in the 
+           table as YYYY-MM-DD"),
         DT::DTOutput(ns("show_data"))
       )
     )
@@ -45,13 +47,28 @@ mod_data_load_server <- function(id){
     
     final_data <- reactive({
       
+      req(imported$data())
+      
       return_data <- imported$data()
       
-      # if(TRUE)
+      if(input$format_date){
+        
+        if(typeof(return_data[[input$date_field]]) == "character"){
+
+          return_data <- return_data %>% 
+            dplyr::mutate(across(all_of(input$date_field),
+                                 ~ as.Date(., format = input$data_format)))
+        }
+      }
+      
+      return(return_data)
     })
     
     output$show_data <- DT::renderDT({
-      imported$data()
+      
+      req(final_data())
+      
+      final_data()
     })
     
     output$format_checkbox <- renderUI({
@@ -71,7 +88,7 @@ mod_data_load_server <- function(id){
       }
       
       tagList(
-        selectInput(session$ns("dateFormat"), "Date format",
+        selectInput(session$ns("data_format"), "Date format",
                     choices = c("DD-MM-YYYY" = "%d-%m-%Y", 
                                 "MM-DD-YYYY" = "%m-%d-%Y",
                                 "YYYY-MM-DD" = "%Y-%m-%d",
@@ -85,7 +102,7 @@ mod_data_load_server <- function(id){
     })
     
     reactive(
-      imported$data()
+      final_data()
     )
   })
 }
