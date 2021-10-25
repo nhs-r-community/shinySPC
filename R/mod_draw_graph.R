@@ -45,9 +45,13 @@ mod_draw_graph_server <- function(id, data){
       
       names(df) <- c("Time", "Value")
       
+      # df %>%
+      #   qicharts2::qic(Time, Value,
+      #                  data     = .)
+      
       df %>%
-        qicharts2::qic(Time, Value,
-                       data     = .)
+        dplyr::mutate(Value = as.numeric(Value)) %>% 
+        NHSRplotthedots::ptd_spc(value_field = Value, date_field = Time)
     })
  
   })

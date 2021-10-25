@@ -22,6 +22,8 @@ usethis::use_package( "datamods" )
 usethis::use_package( "DT" )
 usethis::use_package( "dplyr" )
 usethis::use_package( "qicharts2" )
+usethis::use_dev_package( "NHSRplotthedots/", 
+                          remote = "nhs-r-community/NHSRplotthedots" )
 
 usethis::use_pipe()
 
