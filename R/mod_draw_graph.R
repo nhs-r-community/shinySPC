@@ -14,7 +14,7 @@ mod_draw_graph_ui <- function(id){
     plotOutput(ns("showData"))
   )
 }
-    
+
 #' draw_graph Server Functions
 #'
 #' @noRd 
@@ -31,7 +31,9 @@ mod_draw_graph_server <- function(id, data){
                              selected = names(data())[1])),
           column(2, 
                  selectInput(ns("yAxis"), "Y- axis", choices = names(data()),
-                             selected = names(data())[2]))
+                             selected = names(data())[2])),
+          column(2, 
+                 checkboxInput(ns("plot_the_dots"), "Use NHSEI plot the dots?"))
         )
       )
     })
@@ -45,14 +47,18 @@ mod_draw_graph_server <- function(id, data){
       
       names(df) <- c("Time", "Value")
       
-      # df %>%
-      #   qicharts2::qic(Time, Value,
-      #                  data     = .)
-      
-      df %>%
-        dplyr::mutate(Value = as.numeric(Value)) %>% 
-        NHSRplotthedots::ptd_spc(value_field = Value, date_field = Time)
+      if(input$plot_the_dots){
+        
+        df %>%
+          dplyr::mutate(Value = as.numeric(Value)) %>% 
+          NHSRplotthedots::ptd_spc(value_field = Value, date_field = Time)
+        
+      } else {
+        
+        df %>%
+          qicharts2::qic(Time, Value,
+                         data     = ., chart = "c", xlab = "Date",)
+      }
     })
- 
   })
 }
