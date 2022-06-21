@@ -15,4 +15,4 @@ library(shinySPC)
 run_app()
 ```
 
-[A live demo can be found here](https://involve.nottshc.nhs.uk:8443/content/879e1268-8e24-4d8e-98c5-1786a876d825)
+[A live demo can be found here](https://involve.nottshc.nhs.uk/rsconnect/content/879e1268-8e24-4d8e-98c5-1786a876d825/)
